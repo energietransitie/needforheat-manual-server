@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  web:
+    container_name: twomes-manual-server
+    build: .
+    ports:
+      - 8080:8080
+    volumes:
+      - ./source:/source
+    environment:
+      - TWOMES_MANUAL_SOURCE=./source
+      - TWOMES_FALLBACK_LANG=en-GB

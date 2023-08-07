@@ -1,0 +1,6 @@
+# Ignore source and parsed folders. Used while developing/debugging.
+/source/
+/parsed/
+
+# Ignore VS code configuration
+/.vscode/
