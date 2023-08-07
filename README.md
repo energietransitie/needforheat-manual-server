@@ -60,6 +60,11 @@ The manuals are now available on http://localhost:8080/.
 
 ## Usage
 
+### Device display names
+Device display names can be retrieved from `/devices/<device-name>`.
+
+This will return a json object with display names in different languages.
+
 ### Device manuals
 Device manuals can be retrieved from `/devices/<device-name>/<manual-type>`.
 
