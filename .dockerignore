@@ -1,0 +1,3 @@
+# Ignore source and parsed folders. Used while developing/debugging.
+/source/
+/parsed/
