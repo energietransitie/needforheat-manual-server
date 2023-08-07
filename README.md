@@ -60,6 +60,12 @@ The manuals are now available on http://localhost:8080/.
 
 ## Usage
 
+### Writing manuals
+
+Manuals are written in Markdown. The Markdown files should be placed in a folder structure following some rules. Read [this](./docs/source-folder-structure.md) document to see what the folder structure has to be, which files to place in it and what names to give them.
+
+Manuals can be written by device firmware makers. Read [this](./docs/device-repo-manuals.md) document to see how you can write manuals for a specific device when making firmware for it.
+
 ### Device display names
 Device display names can be retrieved from `/devices/<device-name>`.
 
