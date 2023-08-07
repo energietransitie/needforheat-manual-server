@@ -3,7 +3,7 @@ module github.com/energietransitie/twomes-manual-server
 go 1.20
 
 require (
-	github.com/go-chi/chi v1.5.4
+	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/gomarkdown/markdown v0.0.0-20230716120725-531d2d74bc12
 	golang.org/x/sync v0.3.0
 	golang.org/x/text v0.11.0
