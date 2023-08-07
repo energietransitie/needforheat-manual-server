@@ -30,7 +30,7 @@ version: "3.8"
 services:
   web:
     container_name: twomes-manual-server
-    build: .
+    image: ghcr.io/energietransitie/twomes-manual-server:latest
     ports:
       - 8080:8080
     volumes:
