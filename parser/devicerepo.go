@@ -36,7 +36,7 @@ func NewDeviceRepoSource(url string, auth transport.AuthMethod) (fs.FS, error) {
 // Use filePath at sourceFS to determine the path the file should be copied to at the destination filesystem.
 func (repo DeviceRepoSource) GetDestinationFilePath(filePath string) string {
 	// docs/manuals/installation/assets/
-	// docs/manuals/installation/languages/en-GB.md
+	// docs/manuals/installation/languages/en-US.md
 	//
 	// devices/Generic-Test/installation/assets/
 	// docs/manuals/ need to go

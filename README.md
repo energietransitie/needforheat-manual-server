@@ -37,7 +37,7 @@ services:
       - ./source:/source
     environment:
       - TWOMES_MANUAL_SOURCE=./source
-      - TWOMES_FALLBACK_LANG=en-GB
+      - TWOMES_FALLBACK_LANG=en-US
 ```
 
 ## Developing
@@ -78,14 +78,14 @@ A generic manual (not specific to a campaign) can be retrieved from `/devices/<d
 
 If you try to retrieve a manual of a specific type that does not exist, you will be redirected to the 'manufacturer' version if it exists.
 
-Manuals from `/devices/<device-name>/<manual-type>` will automatically redirect to the language that your browser requests using the Accept-Language header. e.g. `/devices/<device-name>/<manual-type>/en-GB/` for a British English version.
+Manuals from `/devices/<device-name>/<manual-type>` will automatically redirect to the language that your browser requests using the Accept-Language header. e.g. `/devices/<device-name>/<manual-type>/en-US/` for a British English version.
 
 ### Campaign manuals
 Campaign manuals can be retrieved from `/campaigns/<campaign-name>/<manual-type>`.
 
 A generic manual (not specific to a campaign, but more generic to the lab e.g. privacy policy) can be retrieved from `/campaigns/<manual-type>/`. This will auto redirect to `/campaigns/generic/<manual-type>`.
 
-Manuals from `/campaigns/<campaign-name>/<manual-type>` will automatically redirect to the language that your browser requests using the Accept-Language header. e.g. `/campaigns/<campaign-name>/<manual-type>/en-GB/` for a British English version.
+Manuals from `/campaigns/<campaign-name>/<manual-type>` will automatically redirect to the language that your browser requests using the Accept-Language header. e.g. `/campaigns/<campaign-name>/<manual-type>/en-US/` for a British English version.
 
 ## Features
 Ready:

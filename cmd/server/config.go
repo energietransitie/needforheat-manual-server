@@ -35,7 +35,7 @@ type Config struct {
 	//
 	// Set by environment variable TWOMES_FALLBACK_LANG.
 	//
-	// This must be a valid language code (e.g. nl-NL or en-GB).
+	// This must be a valid language code (e.g. nl-NL or en-US).
 	FallbackLanguage language.Tag
 }
 

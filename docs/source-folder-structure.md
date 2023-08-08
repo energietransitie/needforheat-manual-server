@@ -28,7 +28,7 @@ The manuals can be different per campaign. To customise a manual for a specific 
             └── <campaign-name>/
                 ├── languages/
                 │   ├── nl-NL.md
-                │   └── en-GB.md
+                │   └── en-US.md
                 └── assets/
                     └── ...
 ```
@@ -60,7 +60,7 @@ This file has the human readable display name for each supported language.
 ```json
 {
   "nl-NL": "Slimme meter module",
-  "en-GB": "Smart meter module"
+  "en-US": "Smart meter module"
 }
 ```
 
@@ -78,7 +78,7 @@ It contains a `languages` folder and possibly an `assets` folder.
 
 #### `languages/`
 
-This folder contains markdown files for different languages. The names of the markdown files must be: `<language_code>.md` (e.g. `nl-NL.md` or `en-GB.md`).
+This folder contains markdown files for different languages. The names of the markdown files must be: `<language_code>.md` (e.g. `nl-NL.md` or `en-US.md`).
 
 #### `assets/`
 
@@ -97,7 +97,7 @@ Campaign manuals are manuals for a specific campaign. This can be something like
         └── <manual-type>/
             ├── languages/
             │   ├── nl-NL.md
-            │   └── en-GB.md
+            │   └── en-US.md
             └── assets/
                 └── ...
 ```
@@ -118,7 +118,7 @@ It contains a `languages` folder and possibly an `assets` folder.
 
 #### `languages/`
 
-This folder contains markdown files for different languages. The names of the markdown files must be: `<language_code>.md` (e.g. `nl-NL.md` or `en-GB.md`).
+This folder contains markdown files for different languages. The names of the markdown files must be: `<language_code>.md` (e.g. `nl-NL.md` or `en-US.md`).
 
 #### `assets/`
 

@@ -17,7 +17,7 @@ This can be done by using the following folder structure from the root of the re
         └── <manual_type>/
             ├── languages/
             │   ├── nl-NL.md
-            │   └── en-GB.md
+            │   └── en-US.md
             └── assets/
                 └── ...
 ```
@@ -34,7 +34,7 @@ It contains a `languages` folder and possibly an `assets` folder.
 
 #### `languages/`
 
-This folder contains markdown files for different languages. The names of the markdown files must be: `<language_code>.md` (e.g. `nl-NL.md` or `en-GB.md`).
+This folder contains markdown files for different languages. The names of the markdown files must be: `<language_code>.md` (e.g. `nl-NL.md` or `en-US.md`).
 
 #### `assets/`
 

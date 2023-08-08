@@ -9,4 +9,4 @@ services:
       - ./source:/source
     environment:
       - TWOMES_MANUAL_SOURCE=./source
-      - TWOMES_FALLBACK_LANG=en-GB
+      - TWOMES_FALLBACK_LANG=en-US
