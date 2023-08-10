@@ -22,10 +22,6 @@ This can be done by using the following folder structure from the root of the re
                 └── ...
 ```
 
-### `devices` directory
-
-The main directory where the device-specific manuals are placed.
-
 ### `manual-type` directory
 
 A folder for a manual type (e.g. `info`, or `installation`). 
