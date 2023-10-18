@@ -3,17 +3,21 @@
 package parser
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"html/template"
 	"io"
 	"io/fs"
+	"log"
+	"net/http"
 	"os"
 	"path"
 	"strings"
 
 	"github.com/energietransitie/twomes-manual-server/wfs"
 	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/ast"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
 )
@@ -129,6 +133,8 @@ func (p *Parser) parseMdToHTML(sourceFS fs.FS, filePath string) error {
 
 	mdParser := parser.NewWithExtensions(parser.CommonExtensions)
 	doc := mdParser.Parse(md)
+
+	doc = base64EncodeImages(doc, sourceFS, filePath)
 
 	htmlRenderer := html.NewRenderer(html.RendererOptions{Flags: html.CommonFlags})
 
@@ -290,6 +296,49 @@ func findTitle(input []byte) string {
 		return strings.TrimSpace(title)
 	}
 	return fallbackManualTitle
+}
+
+// Find all images and embed them into the src as base64, instead of a (relative) link.
+func base64EncodeImages(doc ast.Node, fsys fs.FS, mdFilepath string) ast.Node {
+	ast.WalkFunc(doc, func(node ast.Node, entering bool) ast.WalkStatus {
+		if img, ok := node.(*ast.Image); ok && entering {
+			imageExtension := path.Ext(string(img.Destination))
+			imageExtension = strings.TrimPrefix(imageExtension, ".")
+
+			imageData, err := readImage(string(img.Destination), fsys, mdFilepath)
+			if err != nil {
+				log.Println("error reading image:", err)
+				return ast.Terminate
+			}
+
+			base64Image := base64.StdEncoding.EncodeToString(imageData)
+
+			src := "data:image/" + imageExtension + ";base64," + base64Image
+
+			img.Destination = []byte(src)
+		}
+
+		return ast.GoToNext
+	})
+	return doc
+}
+
+// Read image data from a source.
+// Returns the bytes.
+func readImage(source string, fsys fs.FS, mdFilepath string) ([]byte, error) {
+	if strings.HasPrefix(source, "http://") || strings.HasPrefix(source, "https://") {
+		// Image has to be downloaded first.
+		resp, err := http.Get(source)
+		if err != nil {
+			return []byte{}, err
+		}
+
+		defer resp.Body.Close()
+		return io.ReadAll(resp.Body)
+	} else {
+		relativePath := path.Join(path.Dir(mdFilepath), source)
+		return fs.ReadFile(fsys, relativePath)
+	}
 }
 
 // Returns if file at filePath exists.
