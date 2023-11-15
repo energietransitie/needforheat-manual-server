@@ -19,7 +19,7 @@ type DeviceRepoSource struct {
 
 // Create a new source filesystem from a directory at path.
 func NewDeviceRepoSource(url string, auth transport.AuthMethod) (fs.FS, error) {
-	gitFS, repoName, err := newGitFSWithAuth(url, auth)
+	gitFS, repoName, err := newGitFSWithAuth(url, "", auth)
 	if err != nil {
 		if errors.Is(err, transport.ErrAuthenticationRequired) {
 			log.Println("device repo for", url, "could not be opened because it needs authentication")

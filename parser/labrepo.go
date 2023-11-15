@@ -12,8 +12,8 @@ type LabRepoSource struct {
 }
 
 // Create a new source filesystem from a directory at path.
-func NewLabRepoSource(url string, auth transport.AuthMethod) (fs.FS, error) {
-	gitFS, _, err := newGitFSWithAuth(url, auth)
+func NewLabRepoSource(url string, branch string, auth transport.AuthMethod) (fs.FS, error) {
+	gitFS, _, err := newGitFSWithAuth(url, branch, auth)
 	if err != nil {
 		return nil, err
 	}

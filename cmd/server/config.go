@@ -27,7 +27,9 @@ type Config struct {
 	//
 	// This can be a local directory or a git repository.
 	// A local directory has to be a regular path (e.g. 'source' or './source').
-	// A git repository has to start with https:// (e.g. 'https://github.com/energietransitie/twomes-presence-detector-firmware').
+	// A git repository has to start with https:// and end with .git (e.g. 'https://github.com/energietransitie/twomes-presence-detector-firmware.git').
+	//
+	// The default branch is used, unless you set TWOMES_MANUAL_SOURCE_BRANCH to a branch name.
 	Source fs.FS
 
 	// FallbackLanguage sets the fallback language for when
@@ -65,9 +67,14 @@ func parseSourceEnv() (fs.FS, error) {
 		sourceEnv = SourceEnvDefault
 	}
 
+	sourceBranchEnv := os.Getenv("TWOMES_MANUAL_SOURCE_BRANCH")
+
 	if strings.Contains(sourceEnv, "https://") {
 		log.Println("using git repository", sourceEnv, "as manual source")
-		return parser.NewLabRepoSource(sourceEnv, nil)
+		if sourceBranchEnv != "" {
+			log.Println("using branch", sourceBranchEnv)
+		}
+		return parser.NewLabRepoSource(sourceEnv, sourceBranchEnv, nil)
 	}
 	log.Println("using local directory", sourceEnv, "as manual source")
 	return parser.NewLabDirSource(sourceEnv)

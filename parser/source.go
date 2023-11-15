@@ -7,6 +7,7 @@ import (
 	"path"
 
 	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/transport"
 )
 
@@ -48,17 +49,23 @@ func GetDestinationDirPath(source fs.FS, dirPath string) (string, error) {
 }
 
 // Create a new source filesystem from a git repo at url.
-func newGitFSWithAuth(url string, auth transport.AuthMethod) (fs.FS, string, error) {
+func newGitFSWithAuth(url string, branch string, auth transport.AuthMethod) (fs.FS, string, error) {
 	dir, err := mkdirTemp()
 	if err != nil {
 		return nil, "", err
 	}
 
-	_, err = git.PlainClone(dir, false, &git.CloneOptions{
+	opts := &git.CloneOptions{
 		URL:   url,
 		Auth:  auth,
 		Depth: 1,
-	})
+	}
+
+	if branch != "" {
+		opts.ReferenceName = plumbing.NewBranchReferenceName(branch)
+	}
+
+	_, err = git.PlainClone(dir, false, opts)
 
 	return os.DirFS(dir), path.Base(url), err
 }
