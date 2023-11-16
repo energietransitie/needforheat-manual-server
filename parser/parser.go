@@ -349,13 +349,9 @@ func fileExists(sourceFS fs.FS, filePath string) bool {
 
 // Returns if d is a README file.
 func isIgnoredFile(d fs.DirEntry) bool {
-	if d.IsDir() {
-		return true
-	}
-
 	switch d.Name() {
 	case "README.md", "readme.md", "LICENSE.md", "license.md":
-		return true
+		return !d.IsDir()
 	default:
 		return false
 	}
