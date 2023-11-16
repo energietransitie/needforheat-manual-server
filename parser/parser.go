@@ -87,7 +87,7 @@ func (p *Parser) parseRecursive(sourceFS fs.FS, pathName string) error {
 
 	for _, entry := range entries {
 		fullPath := path.Join(pathName, entry.Name())
-		if isReadmeFile(entry) {
+		if isIgnoredFile(entry) {
 			continue
 		} else if isMarkdownFile(entry) {
 			err = p.parseMdToHTML(sourceFS, fullPath)
@@ -348,8 +348,17 @@ func fileExists(sourceFS fs.FS, filePath string) bool {
 }
 
 // Returns if d is a README file.
-func isReadmeFile(d fs.DirEntry) bool {
-	return !d.IsDir() && d.Name() == "README.md"
+func isIgnoredFile(d fs.DirEntry) bool {
+	if d.IsDir() {
+		return true
+	}
+
+	switch d.Name() {
+	case "README.md", "readme.md", "LICENSE.md", "license.md":
+		return true
+	default:
+		return false
+	}
 }
 
 // Returns if d is a markdown file.
