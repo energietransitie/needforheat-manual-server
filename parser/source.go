@@ -3,6 +3,7 @@ package parser
 import (
 	"errors"
 	"io/fs"
+	"log"
 	"os"
 	"path"
 
@@ -65,7 +66,17 @@ func newGitFSWithAuth(url string, branch string, auth transport.AuthMethod) (fs.
 		opts.ReferenceName = plumbing.NewBranchReferenceName(branch)
 	}
 
-	_, err = git.PlainClone(dir, false, opts)
+	repo, err := git.PlainClone(dir, false, opts)
+	if err != nil {
+		return nil, "", err
+	}
+
+	ref, err := repo.Head()
+	if err != nil {
+		return nil, "", err
+	}
+
+	log.Println("cloned", url, "at", ref.Hash().String())
 
 	return os.DirFS(dir), path.Base(url), err
 }
