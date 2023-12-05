@@ -39,20 +39,17 @@ func NewServer(fsys fs.FS, options ServerOptions) *Server {
 		options: options,
 	}
 
-	r.Handle("/campaigns/{manual_type_name}", Handler(server.handleCampaignGenericRedirect))
+	r.Handle("/campaigns/{manual_type_name}/", Handler(server.handleCampaignGenericRedirect))
 
-	r.Handle("/campaigns/{campaign_name}/{manual_type_name}", Handler(server.handleLanguageRedirect))
 	r.Handle("/campaigns/{campaign_name}/{manual_type_name}/", Handler(server.handleLanguageRedirect))
 
 	r.Handle("/campaigns/{campaign_name}/{manual_type_name}/*", http.FileServer(http.FS(server.fsys)))
 
 	r.Handle("/devices/{device_type_name}", Handler(server.handleDisplayName))
 
-	r.Handle("/devices/{device_type_name}/{manual_type_name}", Handler(server.handleDeviceGenericRedirect))
 	r.Handle("/devices/{device_type_name}/{manual_type_name}/", Handler(server.handleDeviceGenericRedirect))
 
 	languageRedirectWithManufacturerFallback := manufacturerFallbackMiddleware(server.handleLanguageRedirect)
-	r.Handle("/devices/{device_type_name}/{manual_type_name}/{campaign_name}", languageRedirectWithManufacturerFallback)
 	r.Handle("/devices/{device_type_name}/{manual_type_name}/{campaign_name}/", languageRedirectWithManufacturerFallback)
 
 	r.Handle("/devices/{device_type_name}/{manual_type_name}/{campaign_name}/*", http.FileServer(http.FS(server.fsys)))
