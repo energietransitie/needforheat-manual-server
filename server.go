@@ -40,6 +40,7 @@ func NewServer(fsys fs.FS, options ServerOptions) *Server {
 	}
 
 	r.Handle("/campaigns/{manual_type_name}", Handler(server.handleCampaignGenericRedirect))
+	r.Handle("/campaigns/{manual_type_name}/", Handler(server.handleCampaignGenericRedirect))
 
 	r.Handle("/campaigns/{campaign_name}/{manual_type_name}", Handler(server.handleLanguageRedirect))
 	r.Handle("/campaigns/{campaign_name}/{manual_type_name}/", Handler(server.handleLanguageRedirect))
