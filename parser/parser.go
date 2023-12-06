@@ -140,12 +140,7 @@ func (p *Parser) parseMdToHTML(sourceFS fs.FS, filePath string) error {
 
 	renderedHTML := markdown.Render(doc, htmlRenderer)
 
-	templateFilePath, err := p.findTemplateFile(sourceFS, filePath)
-	if err != nil {
-		return err
-	}
-
-	t, err := template.New(htmlTemplateFileName).ParseFS(sourceFS, templateFilePath)
+	t, err := p.findTemplate(sourceFS, filePath)
 	if err != nil {
 		return err
 	}
@@ -205,10 +200,10 @@ func (p *Parser) getRepoManual(sourceFS fs.FS, filePath string) error {
 }
 
 // Return the filepath of the template file that should be used for the file at the specified filePath.
-func (p *Parser) findTemplateFile(sourceFS fs.FS, filePath string) (string, error) {
+func (p *Parser) findTemplate(sourceFS fs.FS, filePath string) (*template.Template, error) {
 	splitFilePath := strings.Split(filePath, string(os.PathSeparator))
 	if len(splitFilePath) <= 1 {
-		return "", ErrTemplateNotFound
+		return nil, ErrTemplateNotFound
 	}
 
 	parentDir := path.Join(splitFilePath[:len(splitFilePath)-1]...)
@@ -216,10 +211,10 @@ func (p *Parser) findTemplateFile(sourceFS fs.FS, filePath string) (string, erro
 
 	if !fileExists(sourceFS, testFilePath) {
 		// Look for template file in the next directory up.
-		return p.findTemplateFile(sourceFS, parentDir)
+		return p.findTemplate(sourceFS, parentDir)
 	}
 
-	return testFilePath, nil
+	return template.New(htmlTemplateFileName).ParseFS(sourceFS, testFilePath)
 }
 
 // Copy file at filePath from p.sourceFS to p.destFS.
