@@ -15,6 +15,7 @@ import (
 	"path"
 	"strings"
 
+	"github.com/energietransitie/twomes-manual-server/defaults"
 	"github.com/energietransitie/twomes-manual-server/wfs"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/ast"
@@ -31,6 +32,15 @@ var (
 	ErrTemplateNotFound = errors.New("template file could not be found")
 )
 
+// ManualCategory is the type of manual.
+type ManualCategory string
+
+const (
+	ManualCategoryUnknown  ManualCategory = "unknown"
+	ManualCategoryDevice   ManualCategory = "devices"
+	ManualCategoryCampaign ManualCategory = "campaigns"
+)
+
 // HTMLTemplate contains data for filling a template.html.
 type HTMLTemplate struct {
 	Language string
@@ -44,6 +54,9 @@ type HTMLTemplate struct {
 // while checking languages and creating a structure that can be served by a [Server].
 type Parser struct {
 	destFS fs.FS
+
+	// Temporarily store the current filePath being parsed.
+	currentFile string
 }
 
 // Create a new Parser that uses sourceFS as its filesystem to parse manuals.
@@ -131,6 +144,8 @@ func (p *Parser) parseMdToHTML(sourceFS fs.FS, filePath string) error {
 		return err
 	}
 
+	p.currentFile = filePath
+
 	mdParser := parser.NewWithExtensions(parser.CommonExtensions)
 	doc := mdParser.Parse(md)
 
@@ -203,7 +218,9 @@ func (p *Parser) getRepoManual(sourceFS fs.FS, filePath string) error {
 func (p *Parser) findTemplate(sourceFS fs.FS, filePath string) (*template.Template, error) {
 	splitFilePath := strings.Split(filePath, string(os.PathSeparator))
 	if len(splitFilePath) <= 1 {
-		return nil, ErrTemplateNotFound
+		category := p.getCurrentFileCategory()
+		fileName := string(category) + ".html"
+		return template.New(fileName).ParseFS(defaults.DefaultTemplates, fileName)
 	}
 
 	parentDir := path.Join(splitFilePath[:len(splitFilePath)-1]...)
@@ -272,6 +289,21 @@ func (p *Parser) copyDirToDest(sourceFS fs.FS, dirPath string) error {
 	}
 
 	return nil
+}
+
+// Return the ManualCategory of the current file being parsed.
+func (p *Parser) getCurrentFileCategory() ManualCategory {
+	splitFilePath := strings.Split(p.currentFile, string(os.PathSeparator))
+
+	for _, part := range splitFilePath {
+		if part == "campaigns" {
+			return ManualCategoryCampaign
+		} else if part == "devices" {
+			return ManualCategoryDevice
+		}
+	}
+
+	return ManualCategoryUnknown
 }
 
 // Find the title of a markdown file.
