@@ -11,7 +11,6 @@ import (
 	"time"
 
 	twomesmanualserver "github.com/energietransitie/twomes-manual-server"
-	custommiddleware "github.com/energietransitie/twomes-manual-server/middleware"
 	"github.com/energietransitie/twomes-manual-server/parser"
 	"github.com/energietransitie/twomes-manual-server/wfs/dirfs"
 	"github.com/go-chi/chi"
@@ -47,7 +46,6 @@ func main() {
 
 	r.Use(middleware.Timeout(time.Second * 30))
 	r.Use(middleware.Heartbeat("/healthcheck"))
-	r.Use(custommiddleware.CleanPathRedirect)
 	r.Use(middleware.Logger)
 
 	r.Mount("/", server)

@@ -7,6 +7,7 @@ import (
 	"path"
 	"strings"
 
+	"github.com/energietransitie/twomes-manual-server/middleware"
 	"github.com/go-chi/chi"
 	"golang.org/x/text/language"
 )
@@ -39,20 +40,28 @@ func NewServer(fsys fs.FS, options ServerOptions) *Server {
 		options: options,
 	}
 
-	r.Handle("/campaigns/{manual_type_name}/", Handler(server.handleCampaignGenericRedirect))
+	r.Group(func(r chi.Router) {
+		r.Use(middleware.CleanPathRedirect)
 
-	r.Handle("/campaigns/{campaign_name}/{manual_type_name}/", Handler(server.handleLanguageRedirect))
+		r.Handle("/campaigns/{manual_type_name}/", Handler(server.handleCampaignGenericRedirect))
 
-	r.Handle("/campaigns/{campaign_name}/{manual_type_name}/*", http.FileServer(http.FS(server.fsys)))
+		r.Handle("/campaigns/{campaign_name}/{manual_type_name}/", Handler(server.handleLanguageRedirect))
 
-	r.Handle("/devices/{device_type_name}/", Handler(server.handleDisplayName))
+		r.Handle("/campaigns/{campaign_name}/{manual_type_name}/*", http.FileServer(http.FS(server.fsys)))
 
-	r.Handle("/devices/{device_type_name}/{manual_type_name}/", Handler(server.handleDeviceGenericRedirect))
+		r.Handle("/devices/{device_type_name}/", Handler(server.handleDisplayName))
 
-	languageRedirectWithManufacturerFallback := manufacturerFallbackMiddleware(server.handleLanguageRedirect)
-	r.Handle("/devices/{device_type_name}/{manual_type_name}/{campaign_name}/", languageRedirectWithManufacturerFallback)
+		r.Handle("/devices/{device_type_name}/{manual_type_name}/", Handler(server.handleDeviceGenericRedirect))
 
-	r.Handle("/devices/{device_type_name}/{manual_type_name}/{campaign_name}/*", http.FileServer(http.FS(server.fsys)))
+		languageRedirectWithManufacturerFallback := manufacturerFallbackMiddleware(server.handleLanguageRedirect)
+		r.Handle("/devices/{device_type_name}/{manual_type_name}/{campaign_name}/", languageRedirectWithManufacturerFallback)
+
+		r.Handle("/devices/{device_type_name}/{manual_type_name}/{campaign_name}/*", http.FileServer(http.FS(server.fsys)))
+	})
+
+	// We need to keep this path (without a slash at the end).
+	// The app is still using this URL and won't allow redirects.
+	r.Handle("/devices/{device_type_name}", Handler(server.handleDisplayName))
 
 	return server
 }
