@@ -45,7 +45,7 @@ func NewServer(fsys fs.FS, options ServerOptions) *Server {
 
 	r.Handle("/campaigns/{campaign_name}/{manual_type_name}/*", http.FileServer(http.FS(server.fsys)))
 
-	r.Handle("/devices/{device_type_name}", Handler(server.handleDisplayName))
+	r.Handle("/devices/{device_type_name}/", Handler(server.handleDisplayName))
 
 	r.Handle("/devices/{device_type_name}/{manual_type_name}/", Handler(server.handleDeviceGenericRedirect))
 
