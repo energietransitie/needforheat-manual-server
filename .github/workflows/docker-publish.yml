@@ -18,10 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # Setup QEMU to support multiple platforms
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-
       # Setup Docker buildx
       - name: Set up Docker buildx
         id: buildx

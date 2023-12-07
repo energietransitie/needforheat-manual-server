@@ -1,4 +1,7 @@
-FROM golang:1.20 as build
+FROM --platform=$BUILDPLATFORM golang:1.20 as build
+
+ARG GOOS=$TARGETOS
+ARG GOARCH=$TARGETARCH
 
 WORKDIR /go/src/twomes-manual-server
 
