@@ -23,10 +23,9 @@ func CleanPathRedirect(next http.Handler) http.Handler {
 
 		cleanPath := path.Clean(routePath)
 		cleanPath += "/"
-		if cleanPath != routePath {
-			http.Redirect(w, r, cleanPath, http.StatusMovedPermanently)
-			return
-		}
+
+		rctx.RoutePath = cleanPath
+		r.URL.Path = cleanPath
 
 		next.ServeHTTP(w, r)
 	})
