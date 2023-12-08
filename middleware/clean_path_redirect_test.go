@@ -26,16 +26,20 @@ func TestCleanPathRedirect(t *testing.T) {
 	ts := httptest.NewServer(r)
 	defer ts.Close()
 
-	testRequest(t, ts, "GET", "/test", http.StatusOK, "/test/")
-	testRequest(t, ts, "GET", "/test/", http.StatusOK, "/test/")
-	testRequest(t, ts, "GET", "/test/multiple", http.StatusOK, "/test/multiple/")
-	testRequest(t, ts, "GET", "/test/multiple/", http.StatusOK, "/test/multiple/")
-	testRequest(t, ts, "GET", "/test//multiple/", http.StatusOK, "/test/multiple/")
-	testRequest(t, ts, "GET", "/test//multiple//", http.StatusOK, "/test/multiple/")
+	t.Run("Group", func(t *testing.T) {
+		testRequest(t, ts, "GET", "/test", http.StatusOK, "/test/")
+		testRequest(t, ts, "GET", "/test/", http.StatusOK, "/test/")
+		testRequest(t, ts, "GET", "/test/multiple", http.StatusOK, "/test/multiple/")
+		testRequest(t, ts, "GET", "/test/multiple/", http.StatusOK, "/test/multiple/")
+		testRequest(t, ts, "GET", "/test//multiple/", http.StatusOK, "/test/multiple/")
+		testRequest(t, ts, "GET", "/test//multiple//", http.StatusOK, "/test/multiple/")
+	})
 }
 
 func testRequest(t *testing.T, ts *httptest.Server, method string, path string, expectedStatusCode int, expectedBody string) {
 	t.Run(method+" "+path, func(t *testing.T) {
+		t.Parallel()
+
 		req, err := http.NewRequest(method, ts.URL+path, nil)
 		if err != nil {
 			t.Fatal(err)
