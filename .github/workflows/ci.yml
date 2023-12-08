@@ -22,3 +22,7 @@ jobs:
       # Build executable
       - name: Build executable
         run: CGO_ENABLED=0 go build ./cmd/server/
+
+      # Run tests
+      - name: Run tests
+        run: go test -v ./...
