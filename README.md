@@ -36,8 +36,8 @@ services:
     volumes:
       - ./source:/source
     environment:
-      - TWOMES_MANUAL_SOURCE=./source
-      - TWOMES_FALLBACK_LANG=en-US
+      - NFH_MANUAL_SOURCE=./source
+      - NFH_FALLBACK_LANG=en-US
 ```
 
 ## Developing
