@@ -1,5 +1,5 @@
-# Twomes manual server
-Server that server twomes manuals written in Markdown.
+# NeedForHeat manual server
+Server that server NeedForHeat manuals written in Markdown.
 
 ## Table of contents
 * [Deploying](#deploying)
@@ -16,11 +16,11 @@ For our process to deploy the API to our public server, or update it, see these 
 - Update: https://github.com/energietransitie/twomes-backoffice-configuration#updating
 
 ### Prerequisites
-The Twomes manual server is available as a Docker image.
+The NeedForHeat manual server is available as a Docker image.
 You will need to [install Docker](https://docs.docker.com/engine/install/) to run it.
 
 ### Images
-See all [available images](https://github.com/energietransitie/twomes-manual-server/pkgs/container/twomes-manual-server):
+See all [available images](https://github.com/energietransitie/needforheat-manual-server/pkgs/container/needforheat-manual-server):
 - Use the `latest` tag to get the latest stable release built from a tagged GitHub release. 
 - Use the `main` tag to get the latest development release, built directly from the `main` branch.
 
@@ -29,8 +29,8 @@ See all [available images](https://github.com/energietransitie/twomes-manual-ser
 version: "3.8"
 services:
   web:
-    container_name: twomes-manual-server
-    image: ghcr.io/energietransitie/twomes-manual-server:latest
+    container_name: needforheat-manual-server
+    image: ghcr.io/energietransitie/needforheat-manual-server:latest
     ports:
       - 8080:8080
     volumes:

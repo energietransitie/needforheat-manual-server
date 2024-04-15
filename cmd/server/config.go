@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/energietransitie/twomes-manual-server/parser"
+	"github.com/energietransitie/needforheat-manual-server/parser"
 	"golang.org/x/text/language"
 )
 

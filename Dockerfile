@@ -3,7 +3,7 @@ FROM --platform=$BUILDPLATFORM golang:1.20 as build
 ARG GOOS=$TARGETOS
 ARG GOARCH=$TARGETARCH
 
-WORKDIR /go/src/twomes-manual-server
+WORKDIR /go/src/needforheat-manual-server
 
 # Create /source and /parsed folders to be copied later.
 RUN mkdir /source && \

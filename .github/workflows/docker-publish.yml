@@ -28,7 +28,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ghcr.io/energietransitie/twomes-manual-server
+          images: ghcr.io/energietransitie/needforheat-manual-server
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
