@@ -1,5 +1,5 @@
 // Package parser implements types and methods to parse markdown files in a filesystem to HTML
-// to a destination filesystem that can be used to serve Twomes manuals.
+// to a destination filesystem that can be used to serve needforheat manuals.
 package parser
 
 import (
@@ -15,8 +15,8 @@ import (
 	"path"
 	"strings"
 
-	"github.com/energietransitie/twomes-manual-server/defaults"
-	"github.com/energietransitie/twomes-manual-server/wfs"
+	"github.com/energietransitie/needforheat-manual-server/defaults"
+	"github.com/energietransitie/needforheat-manual-server/wfs"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/ast"
 	"github.com/gomarkdown/markdown/html"
@@ -25,7 +25,7 @@ import (
 
 const (
 	htmlTemplateFileName = "template.html"
-	fallbackManualTitle  = "Twomes manual"
+	fallbackManualTitle  = "NeedForHeat manual"
 )
 
 var (

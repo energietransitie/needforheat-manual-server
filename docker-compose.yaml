@@ -1,12 +1,12 @@
 version: "3.8"
 services:
   web:
-    container_name: twomes-manual-server
+    container_name: needforheat-manual-server
     build: .
     ports:
       - 8080:8080
     volumes:
       - ./source:/source
     environment:
-      - TWOMES_MANUAL_SOURCE=./source
-      - TWOMES_FALLBACK_LANG=en-US
+      - NFH_MANUAL_SOURCE=./source
+      - NFH_FALLBACK_LANG=en-US

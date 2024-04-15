@@ -6,4 +6,4 @@ You can set the title of a manual by setting the first line in markdown to:
 # This is the title
 ```
 
-If the title could bot be detected, it will default to 'Twomes manual'.
+If the title could bot be detected, it will default to 'NeedForHeat manual'.

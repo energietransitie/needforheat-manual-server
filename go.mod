@@ -1,4 +1,4 @@
-module github.com/energietransitie/twomes-manual-server
+module github.com/energietransitie/needforheat-manual-server
 
 go 1.20
 

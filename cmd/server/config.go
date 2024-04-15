@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/energietransitie/twomes-manual-server/parser"
+	"github.com/energietransitie/needforheat-manual-server/parser"
 	"golang.org/x/text/language"
 )
 
@@ -16,26 +16,26 @@ const (
 )
 
 var (
-	ErrFallbackLangEnvNotSet = errors.New("environment variable TWOMES_FALLBACK_LANG was not set")
+	ErrFallbackLangEnvNotSet = errors.New("environment variable NFH_FALLBACK_LANG was not set")
 )
 
 // Config contains the configuration for the server.
 type Config struct {
 	// Source is where the manuals are pulled from.
 	//
-	// Set by environment variable TWOMES_MANUAL_SOURCE.
+	// Set by environment variable NFH_MANUAL_SOURCE.
 	//
 	// This can be a local directory or a git repository.
 	// A local directory has to be a regular path (e.g. 'source' or './source').
 	// A git repository has to start with https:// and end with .git (e.g. 'https://github.com/energietransitie/twomes-presence-detector-firmware.git').
 	//
-	// The default branch is used, unless you set TWOMES_MANUAL_SOURCE_BRANCH to a branch name.
+	// The default branch is used, unless you set NFH_MANUAL_SOURCE_BRANCH to a branch name.
 	Source fs.FS
 
 	// FallbackLanguage sets the fallback language for when
 	// a client's Accept-Language header does not contain any available language.
 	//
-	// Set by environment variable TWOMES_FALLBACK_LANG.
+	// Set by environment variable NFH_FALLBACK_LANG.
 	//
 	// This must be a valid language code (e.g. nl-NL or en-US).
 	FallbackLanguage language.Tag
@@ -62,12 +62,12 @@ func getConfig() (*Config, error) {
 }
 
 func parseSourceEnv() (fs.FS, error) {
-	sourceEnv, ok := os.LookupEnv("TWOMES_MANUAL_SOURCE")
+	sourceEnv, ok := os.LookupEnv("NFH_MANUAL_SOURCE")
 	if !ok {
 		sourceEnv = SourceEnvDefault
 	}
 
-	sourceBranchEnv := os.Getenv("TWOMES_MANUAL_SOURCE_BRANCH")
+	sourceBranchEnv := os.Getenv("NFH_MANUAL_SOURCE_BRANCH")
 
 	if strings.Contains(sourceEnv, "https://") {
 		log.Println("using git repository", sourceEnv, "as manual source")
@@ -81,7 +81,7 @@ func parseSourceEnv() (fs.FS, error) {
 }
 
 func parseFallbackLangEnv() (language.Tag, error) {
-	fallbackLangEnv, ok := os.LookupEnv("TWOMES_FALLBACK_LANG")
+	fallbackLangEnv, ok := os.LookupEnv("NFH_FALLBACK_LANG")
 	if !ok {
 		return language.Tag{}, ErrFallbackLangEnvNotSet
 	}

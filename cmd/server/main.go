@@ -10,10 +10,10 @@ import (
 	"syscall"
 	"time"
 
-	twomesmanualserver "github.com/energietransitie/twomes-manual-server"
-	custommiddleware "github.com/energietransitie/twomes-manual-server/middleware"
-	"github.com/energietransitie/twomes-manual-server/parser"
-	"github.com/energietransitie/twomes-manual-server/wfs/dirfs"
+	needforheatmanualserver "github.com/energietransitie/needforheat-manual-server"
+	custommiddleware "github.com/energietransitie/needforheat-manual-server/middleware"
+	"github.com/energietransitie/needforheat-manual-server/parser"
+	"github.com/energietransitie/needforheat-manual-server/wfs/dirfs"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"golang.org/x/sync/errgroup"
@@ -39,7 +39,7 @@ func main() {
 
 	log.Println("generated folder structure to be served")
 
-	server := twomesmanualserver.NewServer(parsedFS, twomesmanualserver.ServerOptions{
+	server := needforheatmanualserver.NewServer(parsedFS, needforheatmanualserver.ServerOptions{
 		FallbackLanguage: conf.FallbackLanguage,
 	})
 
