@@ -84,6 +84,10 @@ This folder contains markdown files for different languages. The names of the ma
 
 This folder contains assets that can be reffered to from manuals made in the `languages` folder. All assets should be placed here, to make sure they are handled correctly.
 
+## EnergyQuery manuals
+
+EnergyQueries follow the same structure as devices.
+
 ## Campaign manuals
 
 Campaign manuals are manuals for a specific campaign. This can be something like a privacy policy or an FAQ. They are placed in the `campaigns` directory of the manual source.
