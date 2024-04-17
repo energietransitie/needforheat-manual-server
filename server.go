@@ -63,6 +63,15 @@ func NewServer(fsys fs.FS, options ServerOptions) *Server {
 
 	r.Handle("/energyqueries/{energy_query_type_name}/{manual_type_name}/{campaign_name}/*", http.FileServer(http.FS(server.fsys)))
 
+	//Cloud_feeds
+	r.Handle("/cloud_feeds/{cloud_feed_type_name}/", Handler(server.handleDisplayName))
+
+	r.Handle("/cloud_feeds/{cloud_feed_type_name}/{manual_type_name}/", Handler(server.handleDeviceGenericRedirect))
+
+	r.Handle("/cloud_feeds/{cloud_feed_type_name}/{manual_type_name}/{campaign_name}/", languageRedirectWithManufacturerFallback)
+
+	r.Handle("/cloud_feeds/{cloud_feed_type_name}/{manual_type_name}/{campaign_name}/*", http.FileServer(http.FS(server.fsys)))
+
 	return server
 }
 

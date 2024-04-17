@@ -88,6 +88,10 @@ This folder contains assets that can be reffered to from manuals made in the `la
 
 EnergyQueries follow the same structure as devices.
 
+## Cloudfeeds manuals
+
+Cloud_feeds follow the same structure as devices.
+
 ## Campaign manuals
 
 Campaign manuals are manuals for a specific campaign. This can be something like a privacy policy or an FAQ. They are placed in the `campaigns` directory of the manual source.
