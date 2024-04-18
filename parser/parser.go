@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"html/template"
 	"io"
 	"io/fs"
@@ -30,6 +31,7 @@ const (
 
 var (
 	ErrTemplateNotFound = errors.New("template file could not be found")
+	ErrCategoryUnknown  = errors.New("file has unknown category")
 )
 
 // ManualCategory is the type of manual.
@@ -219,6 +221,9 @@ func (p *Parser) findTemplate(sourceFS fs.FS, filePath string) (*template.Templa
 	splitFilePath := strings.Split(filePath, string(os.PathSeparator))
 	if len(splitFilePath) <= 1 {
 		category := p.getCurrentFileCategory()
+		if category == ManualCategoryUnknown {
+			return nil, fmt.Errorf("%w: %s", ErrCategoryUnknown, p.currentFile)
+		}
 		fileName := string(category) + ".html"
 		return template.New(fileName).ParseFS(defaults.DefaultTemplates, fileName)
 	}
