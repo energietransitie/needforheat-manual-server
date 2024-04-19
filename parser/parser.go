@@ -31,16 +31,14 @@ const (
 
 var (
 	ErrTemplateNotFound = errors.New("template file could not be found")
-	ErrCategoryUnknown  = errors.New("file has unknown category")
+	ErrCategoryUnknown  = errors.New("file has no default template")
 )
 
 // ManualCategory is the type of manual.
 type ManualCategory string
 
 const (
-	ManualCategoryUnknown  ManualCategory = "unknown"
-	ManualCategoryDevice   ManualCategory = "devices"
-	ManualCategoryCampaign ManualCategory = "campaigns"
+	ManualCategoryUnknown ManualCategory = "unknown"
 )
 
 // HTMLTemplate contains data for filling a template.html.
@@ -216,16 +214,15 @@ func (p *Parser) getRepoManual(sourceFS fs.FS, filePath string) error {
 	return p.Parse(deviceRepo)
 }
 
-// Return the filepath of the template file that should be used for the file at the specified filePath.
+// Return the template that should be used for the file at the specified filePath.
 func (p *Parser) findTemplate(sourceFS fs.FS, filePath string) (*template.Template, error) {
 	splitFilePath := strings.Split(filePath, string(os.PathSeparator))
 	if len(splitFilePath) <= 1 {
-		category := p.getCurrentFileCategory()
-		if category == ManualCategoryUnknown {
-			return nil, fmt.Errorf("%w: %s", ErrCategoryUnknown, p.currentFile)
+		templateName, err := p.findDefaultTemplate()
+		if err != nil {
+			return nil, fmt.Errorf("%w: %s", err, p.currentFile)
 		}
-		fileName := string(category) + ".html"
-		return template.New(fileName).ParseFS(defaults.DefaultTemplates, fileName)
+		return template.New(templateName).ParseFS(defaults.DefaultTemplates, templateName)
 	}
 
 	parentDir := path.Join(splitFilePath[:len(splitFilePath)-1]...)
@@ -296,19 +293,17 @@ func (p *Parser) copyDirToDest(sourceFS fs.FS, dirPath string) error {
 	return nil
 }
 
-// Return the ManualCategory of the current file being parsed.
-func (p *Parser) getCurrentFileCategory() ManualCategory {
+// Return the default template name for the current file being parsed (if it exists).
+func (p *Parser) findDefaultTemplate() (string, error) {
 	splitFilePath := strings.Split(p.currentFile, string(os.PathSeparator))
 
 	for _, part := range splitFilePath {
-		if part == "campaigns" {
-			return ManualCategoryCampaign
-		} else if part == "devices" {
-			return ManualCategoryDevice
+		if _, err := fs.Stat(defaults.DefaultTemplates, part+".html"); !os.IsNotExist(err) {
+			return part + ".html", nil
 		}
 	}
 
-	return ManualCategoryUnknown
+	return "", ErrTemplateNotFound
 }
 
 // Find the title of a markdown file.
