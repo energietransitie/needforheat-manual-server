@@ -28,6 +28,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	//Parser parses every manual so it can be served
 	parsedFS := dirfs.New("./parsed")
 
 	localDirParser := parser.New(parsedFS)
@@ -45,6 +46,7 @@ func main() {
 
 	r := chi.NewRouter()
 
+	//CleanPathRedirect is the router, it will make sure everything redirects to the right page
 	r.Use(middleware.Timeout(time.Second * 30))
 	r.Use(middleware.Heartbeat("/healthcheck"))
 	r.Use(custommiddleware.CleanPathRedirect)

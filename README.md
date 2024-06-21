@@ -36,7 +36,8 @@ services:
     volumes:
       - ./source:/source
     environment:
-      - NFH_MANUAL_SOURCE=./source
+      - NFH_MANUAL_SOURCE=https://github.com/energietransitie/needforheat-manuals.git
+      - NFH_MANUAL_SOURCE_BRANCH=tst
       - NFH_FALLBACK_LANG=en-US
 ```
 
@@ -114,6 +115,9 @@ This software is created by:
 
 Product owner:
 * Henri ter Hofte · [@henriterhofte](https://github.com/henriterhofte) · Twitter [@HeNRGi](https://twitter.com/HeNRGi)
+
+Thanks also goes to:
+* Harris Mesic - [@Labhatorian](https://github.com/Labhatorian)
 
 We use and gratefully acknowlegde the efforts of the makers of the following source code and libraries:
 * [chi](https://github.com/go-chi/chi), by Peter Kieltyka, Google Inc, licensed under [MIT license](https://github.com/go-chi/chi/blob/master/LICENSE)
