@@ -7,7 +7,7 @@ require (
 	github.com/go-git/go-git/v5 v5.8.1
 	github.com/gomarkdown/markdown v0.0.0-20230716120725-531d2d74bc12
 	golang.org/x/sync v0.3.0
-	golang.org/x/text v0.11.0
+	golang.org/x/text v0.14.0
 )
 
 require (
