@@ -8,6 +8,7 @@ Server that server NeedForHeat manuals written in Markdown.
 * [Features](#features)
 * [Status](#status)
 * [License](#license)
+* [Citation](#citation)
 * [Credits](#credits)
 
 ## Deploying
@@ -109,12 +110,20 @@ Project is: _in progress_
 ## License
 This software is available under the [Apache 2.0 license](./LICENSE), Copyright 2023 [Research group Energy Transition, Windesheim University of Applied Sciences](https://windesheim.nl/energietransitie) 
 
+## Citation
+
+If you use this repository in your research or work, please cite the following pre-print, which describes the overall NeedForHeat DataGear system of which this repository is a part:
+
+> Ter Hofte, H., & van Ravenzwaaij, N. (2025). *NeedForHeat DataGear: An Open Monitoring System to Accelerate the Residential Heating Transition*. arXiv preprint arXiv:2509.06927. https://doi.org/10.48550/arXiv.2509.06927
+
+**Note:** This is a pre-print submitted on 8 Sep 2025 and has not yet been peer-reviewed. For the full paper, see [https://arxiv.org/abs/2509.06927](https://arxiv.org/abs/2509.06927).
+
 ## Credits
 This software is created by:
 * Nick van Ravenzwaaij · [@n-vr](https://github.com/n-vr)
 
 Product owner:
-* Henri ter Hofte · [@henriterhofte](https://github.com/henriterhofte) · Twitter [@HeNRGi](https://twitter.com/HeNRGi)
+* Henri ter Hofte · [@henriterhofte](https://github.com/henriterhofte)
 
 Thanks also goes to:
 * Harris Mesic - [@Labhatorian](https://github.com/Labhatorian)
